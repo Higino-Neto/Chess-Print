@@ -1,19 +1,19 @@
 #!/bin/sh
 
-# Extrair host e porta da DATABASE_URL
-# Se a URL for postgres://user:pass@host:5432/db, isso vai pegar o 'host'
+# Extrai o HOST da URL (ex: dpg-xxxx.render.com)
+# Isso remove o protocolo e a senha, sobrando apenas o endereço do banco
 DB_HOST=$(echo $DATABASE_URL | sed -e 's|.*@||' -e 's|/.*||' -e 's|:.*||')
 DB_PORT=5432
 
-echo "Waiting for database at $DB_HOST:$DB_PORT..."
+echo "Aguardando banco de dados em $DB_HOST:$DB_PORT..."
 
-# Tenta conectar na porta 5432 (Postgres)
+# Tenta conectar no host real fornecido pelo Render
 while ! nc -z $DB_HOST $DB_PORT; do
-  echo "Database is unavailable - sleeping"
+  echo "Banco de dados indisponível no host $DB_HOST - dormindo..."
   sleep 2
 done
 
-echo "Database is up - starting application"
+echo "Banco de dados detectado! Iniciando aplicação..."
 
-# Inicia a aplicação
+# Inicia o Next.js
 npm start
