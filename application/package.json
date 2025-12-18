@@ -17,6 +17,7 @@
     "next": "15.5.3",
     "pg": "^8.16.3",
     "pg-hstore": "^2.3.4",
+    "postgres": "^3.4.7",
     "react": "19.1.0",
     "react-chessboard": "^5.6.1",
     "react-dom": "19.1.0",
