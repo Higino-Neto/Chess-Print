@@ -15,4 +15,4 @@ echo "Sincronizing tables..."
 node database/sync.js
 
 echo "Starting Next.js in Production mode..."
-npm start
+npm start -- -H 0.0.0.0
