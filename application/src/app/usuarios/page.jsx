@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { Usuario } from "../../../database/models/tables";
+export const dynamic = 'force-dynamic';
 
 async function deleteUsuario(formData) {
     'use server';
