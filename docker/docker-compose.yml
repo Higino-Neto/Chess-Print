@@ -2,9 +2,6 @@
     mysql:
       image: mysql:8.0
       restart: always
-      environment:
-        MYSQL_DATABASE: chess_print
-        MYSQL_ROOT_PASSWORD: root
       ports:
         - "3307:3306"
       volumes:
@@ -28,10 +25,8 @@
         - ../application/public:/app/public
       entrypoint: ["/app/entrypoint.sh"]
       environment: 
-        DB_HOST: mysql
-        DB_NAME: chess_print
-        DB_USER: root
-        DB_PASS: root
+        DOCKER_HOST: mysql
+        FASTAPI_ENDPOINT: http://fastapi:8000/convert/
 
     fastapi:
       build:
@@ -41,6 +36,8 @@
         - "8000:8000"
       volumes:
         - ../API/src:/app/src
+      environment:
+        FASTAPI_ENDPOINT: http://fastapi:8000/convert/
   
     
   volumes:
