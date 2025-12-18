@@ -1,4 +1,4 @@
-"use server";
+
 
 import { redirect } from "next/navigation";
 import { Plano } from "../../../database/models/tables";
