@@ -1,4 +1,4 @@
-"use server";
+
 
 import { redirect } from "next/navigation";
 import { Usuario } from "../../../database/models/tables";
