@@ -12,6 +12,8 @@ async function deleteUsuario(formData) {
     const usuario = await Usuario.findByPk(id);
     await usuario.destroy();
 
+    console.log("a");
+
     redirect('/usuarios')
 }
 
