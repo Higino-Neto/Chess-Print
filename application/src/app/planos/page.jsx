@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { Plano } from "../../../database/models/tables";
+export const dynamic = 'force-dynamic';
 
 async function deletePlano (formData) {
 
