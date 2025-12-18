@@ -1,18 +1,19 @@
 #!/bin/sh
 
-DB_HOST_NAME=${DB_HOST:-localhost}
+# Extrair host e porta da DATABASE_URL
+# Se a URL for postgres://user:pass@host:5432/db, isso vai pegar o 'host'
+DB_HOST=$(echo $DATABASE_URL | sed -e 's|.*@||' -e 's|/.*||' -e 's|:.*||')
+DB_PORT=5432
 
-echo "Waiting for database at $DB_HOST_NAME:3306..."
+echo "Waiting for database at $DB_HOST:$DB_PORT..."
 
-while ! nc -z $DB_HOST_NAME 3306; do
+# Tenta conectar na porta 5432 (Postgres)
+while ! nc -z $DB_HOST $DB_PORT; do
   echo "Database is unavailable - sleeping"
   sleep 2
 done
 
-echo "Database Ready!"
+echo "Database is up - starting application"
 
-echo "Sincronizing tables..."
-node database/sync.js
-
-echo "Starting Next.js in Production mode..."
-npm start -- -H 0.0.0.0
+# Inicia a aplicação
+npm start
