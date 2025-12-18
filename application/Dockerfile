@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+ENV DATABASE_URL="postgres://dummy:dummy@localhost:5432/dummy"
+
 RUN npm run build
 
 RUN chmod +x ./entrypoint.sh
