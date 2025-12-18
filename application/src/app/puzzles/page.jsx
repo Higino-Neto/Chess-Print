@@ -1,6 +1,7 @@
 "use server";
 
 import { Puzzle } from "../../../database/models/tables";
+export const dynamic = 'force-dynamic';
 
 export default async function showPuzzle() {
 
