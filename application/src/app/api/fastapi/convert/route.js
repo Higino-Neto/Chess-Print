@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import 'dotenv/config';
 
 export async function POST (req) {
     const formData = await req.formData();

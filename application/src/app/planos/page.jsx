@@ -1,6 +1,19 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { Plano } from "../../../database/models/tables";
+
+async function deletePlano (formData) {
+
+    'use server';
+    const id = formData.get('id');
+
+    const plano = await Plano.findByPk(id);
+
+    await plano.destroy();
+
+    redirect('/planos')
+}
 
 export default async function showPlanos() {
 
@@ -33,6 +46,19 @@ export default async function showPlanos() {
                                 <td className="p-3 text-sm text-gray-200">{plano.limite_conversoes}</td>
                                 <td className="p-3 text-sm text-gray-200">{plano.createdAt.toLocaleString("pt-BR")}</td>
                                 <td className="p-3 text-sm text-gray-200">{plano.updatedAt.toLocaleString("pt-BR")}</td>
+                                <td className="flex gap-2">
+                                    <form action={'/planos/edit'}>
+                                        <input type="hidden" name="id" defaultValue={plano.id} />
+                                        <button className="w-40 h-8 px-2 py-1 cursor-pointer text-[#191927] bg-[#8e72ee] rounded-md shadow-md
+                            transform transition-all duration-300 hover:scale-103 hover:shadow-[#191927]">Edit</button>
+                                    </form>
+
+                                    <form action={deletePlano}>
+                                        <input type="hidden" name="id" defaultValue={plano.id} />
+                                        <button className="w-40 h-8 px-2 py-1 cursor-pointer text-[#191927] bg-[#8e72ee] rounded-md shadow-md
+                            transform transition-all duration-300 hover:scale-103 hover:shadow-[#191927]">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

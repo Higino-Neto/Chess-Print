@@ -47,7 +47,8 @@ const Conversao = mysql.define('Conversao', {
     // id_conversao INT PRIMARY KEY,  
     // data_hora_conversao: DataTypes.DATE,  
     fen_gerado: DataTypes.STRING,
-    precisao: DataTypes.FLOAT
+    precisao: DataTypes.FLOAT,
+    feedback: DataTypes.INTEGER
 });
 
 const Puzzle = mysql.define('Puzzle', {

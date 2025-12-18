@@ -1,15 +1,18 @@
 import { Sequelize } from "sequelize";
-import mysql2 from 'mysql2';
-import 'dotenv/config'
+import 'dotenv/config';
 
-const mysql = new Sequelize(
-  process.env.DB_NAME || "chess_print",
-  process.env.DB_USER || "root",
-  process.env.DB_PASS || "root",
-  {
-    host: process.env.DB_HOST || "mysql",
-    dialect: "mysql",
-    dialectModule: mysql2,
-  });
+const databaseUrl = process.env.DATABASE_URL;
+
+const mysql = new Sequelize(databaseUrl, {
+  dialect: "postgres",
+
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false 
+    }
+  },
+  logging: false,
+});
 
 export default mysql;

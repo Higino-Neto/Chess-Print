@@ -3,11 +3,13 @@ import cv2
 from fastapi import FastAPI, File, UploadFile
 import numpy as np
 import uvicorn
+import os
 from src.board_detection import FenConverter
 
 app = FastAPI()
 
-MODEL_PATH = "/app/model/model.pt" # docker path
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, '../model/model.pt')
 IMAGE_SIZE = 416
 model = YOLO(MODEL_PATH)
 

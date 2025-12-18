@@ -14,23 +14,8 @@
   animation: fadeIn 0.4s ease-out forwards;
 }
 
-/* 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #34344C inset !important; /* cor de fundo */
+  -webkit-text-fill-color: #f9fafb !important; /* cor do texto */
+  transition: background-color 5000s ease-in-out 0s;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} 
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-} */

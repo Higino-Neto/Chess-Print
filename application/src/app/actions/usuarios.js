@@ -27,3 +27,31 @@ export default async function createUsuario(formData) {
     // Volta para a lista de usuários
     redirect('/usuarios');
 }
+
+async function editUsuario(formData) {
+
+    const id = formData.get("id");
+    const nome = formData.get("nome");
+    const email = formData.get("email");
+    const senha = formData.get("senha");
+
+    // Create a general URL
+    const apiURL = `http://localhost:3000/api/usuarios/${id}`
+
+    // Consome no CRUD
+    const res = await fetch(apiURL, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome, email, senha })
+    });
+
+    if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Error editing Usuario");
+    }
+
+    redirect('/usuarios')
+
+}
+
+export { editUsuario };

@@ -85,9 +85,12 @@ export default function Upload_Image() {
                         transform transition-all duration-300 hover:scale-103 hover:shadow-[#191927]
                         ">
 
-                                    <button className="absolute top-0 m-1 right-0 px-2 cursor-pointer text-[#191927] bg-[#8e72ee] rounded-md shadow-md
-                            transform transition-all duration-300 hover:scale-103 hover:shadow-[#191927]"
-                                        onClick={() => handle_delete(upload.id)}>X</button>
+                                    <label className="absolute top-0  right-0 p-1 cursor-pointer transform transition-all duration-300 hover:scale-110">
+
+                                        <Image src={"/times-hexagon-purple.png"} width="28" height="28" alt="add-new-image" />
+                                        <button
+                                            onClick={() => handle_delete(upload.id)}></button>
+                                    </label>
 
                                     <img src={upload.preview} className="w-40 h-40 object-cover rounded-md opacity-0 animate-fadeIn" />
                                     <button className="w-40 h-8 px-2 py-1 cursor-pointer text-[#191927] bg-[#8e72ee] rounded-md shadow-md
@@ -109,7 +112,7 @@ export default function Upload_Image() {
                                     <Image src={"/plus-hexagon.png"} width="60" height="60" alt="add-new-image" />
                                 </label>
                             </div>
-                            
+
 
                         }
                     </div>
