@@ -31,109 +31,137 @@
 <br />
 
 ---
-
 ## About the Project
 
 Chess Print is a open-source AI project that aims convert chess-board positions from old chess books - or just from prints - into online playable boards with high precision in low time.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+### Usability
+
+![alt text](README_Images/Chess%20Print%20Working.gif)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
 ### Motivation
 
 This idea comes from my own trouble to study by chess books. I spent a lot of time putting all the pieces one by one into random chess websites to study them. So I decided to learn ML (Machine Learning) and Computer Vision in order to automatize this manual work.
 
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-<!-- CONTRIBUTING 
-
----
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
--->
-
----
-## Features
-
-Here I will put a bullet list with all that my project is capable of doing.
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 ---
 ## Technologies Used
 
-Essa seção é um resumo das suas habilidades. Coloque as tecnologias em categorias lógicas para facilitar a leitura.
-
-* **Frontend & Web Development:**
-    * **React.js:** Used for building the interactive user interface, managing state with **`useState`**, creating reusable components.
-    * **Next.js:** Implemented for efficient routing, server-side rendering, and managing API requests to both the MySQL database and the Python FastAPI.
-    * **react-chessboard & chess.js:** Integrated for creating the playable and dynamic chess board on the web.
+* **Frontend:**
+  - **Javascript.**
+  - **React.js.**
+  - **Next.js.**
+  - **react-chessboard & chess.js.**
 
 * **Backend & APIs:**
-    * **Python (FastAPI):** Developed a fast and modern API to handle the core logic of image processing and communication with the frontend.
-    * **MySQL:** Used as the database to store and retrieve data efficiently.
+  - **Next.js too.**
+  - **Python.**
+  - **FastAPI.**
+  - **MySQL.** 
 
 * **Machine Learning & Computer Vision:**
-    * **Ultralytics (YOLOv8):** Utilized for machine learning, specifically for image recognition with a Convolutional Neural Network (CNN) to train, validate, and test the AI model for piece and board detection.
-    * **OpenCV & NumPy:** Applied for computer vision tasks such as perspective-shifting and image augmentation to improve the model's accuracy.
-
+  - **Ultralytics (YOLOv8).**
+  - **OpenCV & NumPy.**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 ---
-## Learning & Challenges
+## Installation
 
-Agora eu vou ter que escrever esse README e depois dar commit (release-readme é o nome do branch)
+### Requirements
+- Docker (Docker Compose v2 is included)
 
+Verify installation:
+```bash
+docker --version
+docker compose version
+```
+
+Install Docker (if it's not currently installed):
+https://docs.docker.com/get-docker/
+
+### How to run
+
+```bash
+git clone https://github.com/Higino-Neto/Chess-Print.git
+cd Chess-Print
+docker compose up -d
+```
+
+The system will open in:
+http://localhost:3000
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+### Design System
+
+First, the client uploads a chessboard image to the Next.js server, then it communicates with the intern API in Uvicorn using FastAPI. So it process the image with the YOLO11s model and return an FEN (Forsyth-Edwards Notation) with the information of where the pieces are. After this, React builds the iterative chessboard and shows it for the client. (The database also communicates with the Next.js, but it's not crucial for the main flow).
+
+![alt text](README_Images/flow_diagram.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+---
+### Model Training
 
-<!-- 
+##### Decisions:
+There are two ways of scanning a chessboard: (One by one and All at once)
 
+![alt text](README_Images/choices.png)
+
+One by one: You need to divide the chessboard in 64 pieces and iterate through them all.
+All at once: You need to put the full normalized image into the already trained model.
+
+I chose All at once because YOLO is optimized for it, but other models can be not, so be aware of it.
+
+---
+##### Dataset:
+I tried a lot of datasets, but I acquire better results with this one with 100k images made by Pavel Koryakin: https://www.kaggle.com/datasets/koryakinp/chess-positions
+
+![alt text](README_Images/dataset.png)
+
+---
+##### Training:
+I used a NVIDIA GeForce GTX 1650 4GB to train a YOLO11s model with 100 layers and 9,4 millions of parameters in 20 epochs and it took 12h to finish training.
+
+![alt text](README_Images/training_logs.png)
+
+(Obs1: YOLOv4, YOLOv8 and YOLO11t don't work as well as YOLO11s in this project, so feel free to make a fork of this repository and try YOLO11m or even YOLO11l if your GPU supports it).
+
+(Obs2: I tried first with 50 epochs, but then I found a overfitting in it (And took 25h to train). After 20º epoch, the model starts to memorize noise patterns and loose precision in real tests). 
+
+![alt text](README_Images/training_graphs1.png)
+
+Also, because the queen of both sides is the piece that statistically less apears in boards, the amount of queens in the dataset is lower, then it can cause a little lose of performance in your tests (But I have no problem with it).
+
+
+![alt text](README_Images/training_graphs2.png)
+---
+##### Data augmentation
+
+I tried some image techniques to augment the data, like Estogram Equalised and Gaussian Blur, but neither worked well.
+
+![alt text](README_Images/augmentation_choices.png)
+
+What really helped was removing colors:
+
+![alt text](README_Images/color_choices.png)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+  
+  ---
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+
 Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
@@ -142,22 +170,23 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-
- -->
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+  
+---
 ## 🌐 Contact
 
-Higino P.C. Neto - higino.dev@gmail.com
+Higino P.C. Neto
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Perfil-blue)](https://linkedin.com/in/seu-perfil)
+Email:
+higino.dev@gmail.com
 
-
+Linkedin:
+[![LinkedIn|0x0](https://img.shields.io/badge/LinkedIn-Perfil-blue)](https://www.linkedin.com/in/higino-p-c-neto-7a353a363/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+---
 
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
 [contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
