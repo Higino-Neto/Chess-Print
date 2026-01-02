@@ -111,7 +111,7 @@ First, the client uploads a chessboard image to the Next.js server, then it comm
 ---
 ### Model Training
 
-##### Decisions:
+### Decisions:
 There are two ways of scanning a chessboard: (One by one and All at once)
 
 ![alt text](README_Images/choices.png)
@@ -122,13 +122,13 @@ All at once: You need to put the full normalized image into the already trained 
 I chose All at once because YOLO is optimized for it, but other models can be not, so be aware of it.
 
 ---
-##### Dataset:
+### Dataset:
 I tried a lot of datasets, but I acquire better results with this one with 100k images made by Pavel Koryakin: https://www.kaggle.com/datasets/koryakinp/chess-positions
 
 ![alt text](README_Images/dataset.png)
 
 ---
-##### Training:
+### Training:
 I used a NVIDIA GeForce GTX 1650 4GB to train a YOLO11s model with 100 layers and 9,4 millions of parameters in 20 epochs and it took 12h to finish training.
 
 ![alt text](README_Images/training_logs.png)
@@ -144,7 +144,7 @@ Also, because the queen of both sides is the piece that statistically less apear
 
 ![alt text](README_Images/training_graphs2.png)
 ---
-##### Data augmentation
+### Data augmentation
 
 I tried some image techniques to augment the data, like Estogram Equalised and Gaussian Blur, but neither worked well.
 
