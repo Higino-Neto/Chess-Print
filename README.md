@@ -181,7 +181,7 @@ Email:
 higino.dev@gmail.com
 
 Linkedin:
-[![LinkedIn|0x0](https://img.shields.io/badge/LinkedIn-Perfil-blue)](https://www.linkedin.com/in/higino-p-c-neto-7a353a363/)
+[![LinkedIn|0x0](https://img.shields.io/badge/LinkedIn-Perfil-blue)](https://www.linkedin.com/in/higino-neto-7a353a363/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
